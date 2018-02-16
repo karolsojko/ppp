@@ -1,22 +1,16 @@
 import React, { Component } from 'react'
 
-type Props = {
-  title: string
-}
-
 class List extends Component {
-  props: Props
-
   render() {
-    const { title } = this.props
+    const { title, goals } = this.props
 
     return (
       <div>
         <h1>{title}</h1>
         <ul>
-          <li>Task 1</li>
-          <li>Task 2</li>
-          <li>Task 3</li>
+          {goals && goals.map(goal => (
+            <li>{goal.name}</li>
+          ))}
         </ul>
       </div>
     )
