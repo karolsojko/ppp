@@ -13,7 +13,7 @@ class GoalInput extends Component {
     }
     render() {
         return (
-            <input type="text" placeholder="Your goal" onKeyPress={this.handleKeyPress} />
+            <input type="text" disabled={this.props.disabled} placeholder="Your goal" onKeyPress={this.handleKeyPress} />
         )
     }
 }

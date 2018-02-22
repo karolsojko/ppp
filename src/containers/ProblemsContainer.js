@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import List from '../components/List'
 
 class ProblemsContainer extends Component {
@@ -9,4 +11,6 @@ class ProblemsContainer extends Component {
   }
 }
 
-export default ProblemsContainer
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
+
+export default connect(null, mapDispatchToProps)(ProblemsContainer)

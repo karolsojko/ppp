@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import List from '../components/List'
 
 class ProgressContainer extends Component {
@@ -9,4 +11,6 @@ class ProgressContainer extends Component {
   }
 }
 
-export default ProgressContainer
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
+
+export default connect(null, mapDispatchToProps)(ProgressContainer)

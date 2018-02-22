@@ -1,52 +1,33 @@
 import React, { Component } from 'react'
-import uuid4 from 'uuid/v4'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import List from '../components/List'
 import GoalInput from '../components/GoalInput'
-
-const API_URL = 'test'
-const API_KEY = 'test'
+import { addGoalToPlans } from '../reducers/plans'
 
 class PlansContainer extends Component {
-  constructor() {
-    super()
-    this.state = {
-      goals: []
-    }
-  }
-  componentDidMount() {
-    fetch(`${API_URL}?TableName=ppp-goals`, {
-      headers: {
-        'X-Api-Key': API_KEY
-      }
-    })
-    .then(results => results.json().Items)
-    .then(goals => this.setState({goals}))
-  }
-  handleOnSubmit(value) {
-    fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'X-Api-Key': API_KEY
-      },
-      body: JSON.stringify({
-        TableName: 'ppp-goals',
-        Item: {
-          id: uuid4(),
-          name: value
-        }
-      })
-    })
-    .then(results => results.json())
-    .then(goals => this.setState({goals}))
-  }
   render() {
+    const { addGoalToPlans, isAdding, plans } = this.props
+
     return (
       <div>
-        <List title="Plans" />
-        <GoalInput onSubmit={this.handleOnSubmit} />
+        <List title="Plans" goals={plans} />
+        <GoalInput onSubmit={addGoalToPlans} disabled={isAdding} />
       </div>
     )
   }
 }
 
-export default PlansContainer
+const mapStateToProps = state => ({
+  plans: state.plans.list,
+  isAdding: state.plans.isAdding
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  addGoalToPlans
+}, dispatch)
+
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+)(PlansContainer)
